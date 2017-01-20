@@ -19,9 +19,10 @@ class DeployImporter
           d.repository    = deploy['repository']
           d.username      = deploy['local_username']
           d.environment   = deploy['environment']
-          d.artifact_size = deploy['artifact_size']
           d.missing_sha   = commit_for(d.repository, d.sha).nil?
           d.save!
+
+          SlugInfoFetcher.new(d.id, deploy['slug_id']).delay.fetch_and_update! unless d.artifact_size.present?
         end
       end
     end
