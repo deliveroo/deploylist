@@ -6,6 +6,9 @@ class MetricsRecorder::DatadogAdapter
   end
 
   def track(label, value, at: Time.now.utc)
+    Rails.logger.info "Sending data to datadog! value is #{value.to_f}"
+    Rails.logger.info "Client is #{@client.inspect}"
+
     @client.emit_point(
       _label(label),
       value.to_f,
