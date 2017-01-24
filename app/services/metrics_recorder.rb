@@ -17,6 +17,7 @@ class MetricsRecorder
               raise ArgumentError, "Unknown metrics adapter '#{adapter_type}'"
             end
 
+    Rails.logger.info "MetricsRecorder class is #{klass.class}"
     @adapter = klass.new
   end
 
