@@ -3,6 +3,8 @@ class DeploysController < ApplicationController
 
   protect_from_forgery with: :exception, except: [ :deploy ]
 
+  before_action :redirect_to_changelog_dashboard
+
   def index
     @deploys = Deploy.production.includes(:stories).limit(50)
   end
@@ -28,6 +30,10 @@ class DeploysController < ApplicationController
   end
 
   private
+
+  def redirect_to_changelog_dashboard
+    redirect_to 'https://changelog-dashboard.deliveroo.net'
+  end
 
   def seconds_taken_to(&blk)
     before = Time.now
